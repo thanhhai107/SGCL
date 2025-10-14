@@ -1,0 +1,13 @@
+## Scripts
+## python run.py -m SGCL -d ml-100k
+## python run.py -m SGCL -d amazon-beauty
+## python run.py -m SGCL -d amazon-toys-games
+recbole
+torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+numpy==1.26.0
+ray==2.6.3
+#pyarrow>=9.0.0
+#tensorboardx>=1.9
+torch_geometric
+openTSNE
+matplotlib

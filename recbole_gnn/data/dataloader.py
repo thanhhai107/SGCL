@@ -107,7 +107,8 @@ class CustomizedNegSampleEvalDataLoader(NegSampleEvalDataLoader):
             data = self._dataset[index]
             transformed_data = self.transform(self._dataset, data)
             cur_data = self._neg_sampling(transformed_data)
-            return cur_data, None, None, None
+            # Return empty tensors instead of None to avoid TypeError
+            return cur_data, torch.tensor([]), torch.tensor([]), torch.tensor([])
 
 
 class CustomizedFullSortEvalDataLoader(FullSortEvalDataLoader):

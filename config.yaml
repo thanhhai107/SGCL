@@ -11,9 +11,9 @@ checkpoint_dir: 'saved'
 user_inter_num_interval: "[5,inf)"
 item_inter_num_interval: "[5,inf)"
 
-show_progress: False
+show_progress: True
 save_dataset: False
-dataset_save_path: ~
+dataset_save_path: null
 # dataloader
 save_dataloaders: True
 dataloaders_save_path: 'dataloader/'
@@ -22,7 +22,7 @@ wandb_project: 'recbole'
 
 # training settings
 epochs: 300
-train_batch_size: 1024 
+train_batch_size: 1024
 learner: adam
 
 learning_rate: 0.001
@@ -41,11 +41,13 @@ eval_args:
   split: {'RS':[0.8,0.1,0.1]}
   group_by: user
   order: RO
-  mode: full
+  mode: 
+    valid: full
+    test: full
 repeatable: False
-metrics: ["Recall","NDCG","Hit","Precision","MRR"]
-topk: [20] #[50]
-valid_metric: NDCG@20 #50
+metrics: ["Recall","NDCG","Hit","Precision"]
+topk: [20]
+valid_metric: NDCG@20
 valid_metric_bigger: True
 eval_batch_size: 4096
 metric_decimal_place: 4

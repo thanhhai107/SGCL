@@ -92,6 +92,8 @@ def _get_customized_dataloader(config, phase):
         return CustomizedTrainDataLoader
     else:
         eval_mode = config["eval_args"]["mode"]
+        if isinstance(eval_mode, dict):
+            eval_mode = eval_mode.get(phase, 'full')
         if eval_mode == 'full':
             return CustomizedFullSortEvalDataLoader
         else:
@@ -291,6 +293,8 @@ def get_dataloader(config, phase: Literal["train", "valid", "test", "evaluation"
     else:
         # breakpoint()
         eval_mode = config["eval_args"]["mode"]
+        if isinstance(eval_mode, dict):
+            eval_mode = eval_mode.get(phase, 'full')
         if eval_mode == "full":
             return FullSortEvalDataLoader
         else:

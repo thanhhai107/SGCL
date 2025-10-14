@@ -118,6 +118,7 @@ dmypy.json
 .pyre/
 
 # RecBole
+log/
 log_tensorboard/
 saved/
 dataset/
