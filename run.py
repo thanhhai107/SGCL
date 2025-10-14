@@ -1,4 +1,8 @@
 import argparse
+
+# Apply distributed training patch before importing RecBole modules
+from recbole_gnn import distributed_patch
+
 from recbole_gnn.quick_start import run_recbole_gnn
 
 

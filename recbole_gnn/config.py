@@ -39,17 +39,9 @@ class Config(RecBole_Config):
             self.final_config_dict["gpu_id"] = str(self.final_config_dict["gpu_id"])
         gpu_id = self.final_config_dict["gpu_id"]
         os.environ["CUDA_VISIBLE_DEVICES"] = gpu_id
-        torch.cuda.set_device(int(os.environ["CUDA_VISIBLE_DEVICES"]))
-
-        if "local_rank" not in self.final_config_dict:
-            self.final_config_dict["single_spec"] = True
-            self.final_config_dict["local_rank"] = 0
-            self.final_config_dict["device"] = (
-                torch.device("cpu")
-                if len(gpu_id) == 0 or not torch.cuda.is_available()
-                else torch.device("cuda")
-            )
-        else:
+        
+        # Initialize distributed training only if needed
+        if "local_rank" in self.final_config_dict:
             assert len(gpu_id.split(",")) >= self.final_config_dict["nproc"]
             torch.distributed.init_process_group(
                 backend="nccl",
@@ -70,6 +62,18 @@ class Config(RecBole_Config):
                 self.final_config_dict["state"] = "error"
                 self.final_config_dict["show_progress"] = False
                 self.final_config_dict["verbose"] = False
+        else:
+            # For single GPU training, set device without distributed initialization
+            self.final_config_dict["single_spec"] = True
+            self.final_config_dict["local_rank"] = 0
+            self.final_config_dict["device"] = (
+                torch.device("cpu")
+                if len(gpu_id) == 0 or not torch.cuda.is_available()
+                else torch.device("cuda")
+            )
+            # Only set CUDA device if we have a valid GPU ID and CUDA is available
+            if len(gpu_id) > 0 and torch.cuda.is_available():
+                torch.cuda.set_device(int(gpu_id.split(',')[0]))
 
     def _get_model_and_dataset(self, model, dataset):
 
