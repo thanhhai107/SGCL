@@ -12,9 +12,6 @@ from recbole_gnn.data.dataloader import MixTrainDataLoader
 import copy
 from recbole.evaluator import Evaluator, Collector
 
-from openTSNE import TSNE
-import matplotlib.pyplot as plt 
-
 class NCLTrainer(Trainer):
     def __init__(self, config, model):
         super(NCLTrainer, self).__init__(config, model)
