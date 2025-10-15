@@ -7,9 +7,9 @@ reproducibility: True
 data_path: 'dataset/'
 checkpoint_dir: 'saved'
 
-# 5-core for beauty toys-and-games
-user_inter_num_interval: "[5,inf)"
-item_inter_num_interval: "[5,inf)"
+# k-core for datasets
+user_inter_num_interval: "[1,inf)"
+item_inter_num_interval: "[1,inf)"
 
 show_progress: True
 save_dataset: False
@@ -22,7 +22,7 @@ wandb_project: 'recbole'
 
 # training settings
 epochs: 300
-train_batch_size: 8192
+train_batch_size: 4096
 learner: adam
 
 learning_rate: 0.001
@@ -49,5 +49,5 @@ metrics: ["Recall","NDCG","Hit","Precision"]
 topk: [20]
 valid_metric: NDCG@20
 valid_metric_bigger: True
-eval_batch_size: 16384
+eval_batch_size: 8192
 metric_decimal_place: 4
