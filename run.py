@@ -75,8 +75,25 @@ if __name__ == '__main__':
     parser.add_argument('--suffix', '-s', type=str, default=None, help='log suffix')
     parser.add_argument('--config_files', type=str, default='config.yaml', help='config files')
     parser.add_argument('--tem', '-t', type=str, default=None, help='temperature')
+    parser.add_argument('--extract_only', '-e', action='store_true', help='only extract embeddings from saved model')
     
     args, _ = parser.parse_known_args()
 
     config_file_list = args.config_files.strip().split(' ') if args.config_files else None
-    run_recbole_gnn(model=args.model, dataset=args.dataset, gpu=args.gpu, suffix=args.suffix, lr=args.lr, weight_decay=args.weight_decay, tem=args.tem, config_file_list=config_file_list, saved=True)
+    
+    if args.extract_only:
+        # Only extract embeddings from existing saved model
+        try:
+            from extract import extract_embeddings, save_embeddings
+            print("Extracting embeddings from saved model...")
+            user_embeddings, item_embeddings = extract_embeddings()
+            if user_embeddings is not None and item_embeddings is not None:
+                save_embeddings(user_embeddings, item_embeddings)
+                print("Embeddings saved successfully to embeddings/ folder")
+            else:
+                print("Failed to extract embeddings")
+        except Exception as e:
+            print(f"Error during embedding extraction: {e}")
+    else:
+        # Normal training with automatic embedding extraction
+        run_recbole_gnn(model=args.model, dataset=args.dataset, gpu=args.gpu, suffix=args.suffix, lr=args.lr, weight_decay=args.weight_decay, tem=args.tem, config_file_list=config_file_list, saved=True)

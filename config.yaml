@@ -41,11 +41,11 @@ eval_args:
   split: {'RS':[0.8,0.1,0.1]}
   group_by: user
   order: RO
-  mode: 
+  mode:
     valid: full
     test: full
 repeatable: False
-metrics: ["Recall","NDCG","Hit","Precision"]
+metrics: ["Recall","NDCG","Hit","Precision","MRR"]
 topk: [20]
 valid_metric: NDCG@20
 valid_metric_bigger: True
