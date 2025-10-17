@@ -7,11 +7,11 @@ from recbole_gnn.quick_start import load_data_and_model
 
 sys.path.append(os.path.dirname(__file__))
 
-def find_latest_sgcl_model(saved_dir="saved"):
+def find_latest_model(saved_dir="saved"):
     """
-    Find the latest SGCL model in the saved folder with the pattern "SGCL-*.pth"
+    Find the latest saved model checkpoint by modification time, regardless of model name.
     """
-    pattern = os.path.join(saved_dir, "SGCL-*.pth")
+    pattern = os.path.join(saved_dir, "*.pth")
     model_files = glob.glob(pattern)
     
     if not model_files:
@@ -23,9 +23,9 @@ def find_latest_sgcl_model(saved_dir="saved"):
 
 def extract_embeddings():
     try:
-        model_path = find_latest_sgcl_model()
+        model_path = find_latest_model()
         if model_path is None:
-            print("No SGCL model found in saved folder")
+            print("No model checkpoint (.pth) found in saved folder")
             return None, None
         elif not os.path.exists(model_path):
             print(f"Model file not found: {model_path}")

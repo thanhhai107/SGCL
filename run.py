@@ -2,10 +2,6 @@ import argparse
 import torch
 import os
 
-# ===== DISTRIBUTED TRAINING PATCH =====
-# This patch fixes the torch.distributed.barrier error for single GPU training
-# Works on both local and Kaggle environments
-
 def is_kaggle_environment():
     """Check if running in Kaggle environment"""
     return os.environ.get('KAGGLE_KERNEL_RUN_TYPE') is not None or 'kaggle' in os.environ.get('HOSTNAME', '').lower()
@@ -45,13 +41,11 @@ def safe_get_world_size():
     except:
         return 1
 
-# Apply the patch
 torch.distributed.barrier = safe_barrier
 torch.distributed.is_initialized = safe_is_initialized
 torch.distributed.get_rank = safe_get_rank
 torch.distributed.get_world_size = safe_get_world_size
 
-# Setup environment variables for single GPU training
 if is_kaggle_environment():
     os.environ['MASTER_ADDR'] = 'localhost'
     os.environ['MASTER_PORT'] = '12355'
@@ -59,10 +53,7 @@ if is_kaggle_environment():
     os.environ['RANK'] = '0'
     os.environ['LOCAL_RANK'] = '0'
 
-# ===== END DISTRIBUTED PATCH =====
-
 from recbole_gnn.quick_start import run_recbole_gnn
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -84,14 +75,8 @@ if __name__ == '__main__':
     if args.extract_only:
         # Only extract embeddings from existing saved model
         try:
-            from extract import extract_embeddings, save_embeddings
-            print("Extracting embeddings from saved model...")
-            user_embeddings, item_embeddings = extract_embeddings()
-            if user_embeddings is not None and item_embeddings is not None:
-                save_embeddings(user_embeddings, item_embeddings)
-                print("Embeddings saved successfully to embeddings/ folder")
-            else:
-                print("Failed to extract embeddings")
+            import extract
+            extract.main()
         except Exception as e:
             print(f"Error during embedding extraction: {e}")
     else:

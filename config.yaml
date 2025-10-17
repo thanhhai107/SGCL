@@ -12,10 +12,11 @@ user_inter_num_interval: "[1,inf)"
 item_inter_num_interval: "[1,inf)"
 
 show_progress: True
+# dataset
 save_dataset: False
 dataset_save_path: null
 # dataloader
-save_dataloaders: True
+save_dataloaders: False
 dataloaders_save_path: 'dataloader/'
 log_wandb: False
 wandb_project: 'recbole'

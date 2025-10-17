@@ -1,6 +1,7 @@
-## python run.py -m SGCL -d ml-100k
-## python run.py -m SGCL -d amazon-beauty
-## python run.py -m SGCL -d amazon-toys-games
+## Run Script: python run.py -m SGCL -d amazon-beauty
+### -m [SGCL, LightGCN, LightGCL]
+### -d [ml-100k, amazon-beauty, amazon-toys-games]
+### --extract_only: [True, False]
 
 # Kaggle
 # 3.11.13 (main, Jun  4 2025, 08:57:29) [GCC 11.4.0]
