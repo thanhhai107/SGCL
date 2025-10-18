@@ -59,7 +59,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--run', '-r', type=str, default='rec', help='mode of training')
     parser.add_argument('--model', '-m', type=str, default='SGCL', help='name of models')
-    parser.add_argument('--dataset', '-d', type=str, default='amazon-beauty', help='name of datasets')
+    parser.add_argument('--dataset', '-d', type=str, default='ml-100k', help='name of datasets')
     parser.add_argument('--lr', '-l', type=str, default=0.001, help='learing rate')
     parser.add_argument('--weight_decay', '-w', type=str, default=1e-5, help='weight_decay')
     parser.add_argument('--gpu', '-g', type=str, default='0', help='gpu id')

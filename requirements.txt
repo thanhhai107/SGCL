@@ -1,4 +1,4 @@
-## Run Script: python run.py -m SGCL -d amazon-beauty
+## Run Script: python run.py -m SGCL -d ml-100k
 ### -m [SGCL, LightGCN, LightGCL]
 ### -d [ml-100k, amazon-beauty, amazon-toys-games]
 ### --extract_only: [True, False]
