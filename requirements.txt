@@ -19,3 +19,4 @@ recbole
 torch==2.5.0 --index-url https://download.pytorch.org/whl/cu124
 numpy==1.26.0
 torch_geometric
+#wandb

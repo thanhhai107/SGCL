@@ -75,7 +75,7 @@ if __name__ == '__main__':
     if args.extract_only:
         # Only extract embeddings from existing saved model
         try:
-            import extract
+            import recbole_gnn.extract as extract
             extract.main()
         except Exception as e:
             print(f"Error during embedding extraction: {e}")

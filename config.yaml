@@ -1,54 +1,57 @@
-# general
+# Environment
 gpu_id: 0
-use_gpu: True
+worker: 0
 seed: 2020
 state: INFO
+encoding: 'utf-8'
 reproducibility: True
-data_path: 'dataset/'
-checkpoint_dir: 'saved'
 
-# k-core for datasets
+checkpoint_dir: 'saved/' # model checkpoint path
+data_path: 'dataset/' # path of data files
+dataset_save_path: 'preprocessed_dataset/' # path to save processed datasets
+dataloaders_save_path: 'dataloader/' # path to save dataloaders
+save_dataloaders: False
+save_dataset: False
+
+show_progress: True
+log_wandb: False
+wandb_project: 'recbole'
+shuffle: False # setting false for sequence models
+
+# Data
 user_inter_num_interval: "[1,inf)"
 item_inter_num_interval: "[1,inf)"
 
-show_progress: True
-# dataset
-save_dataset: False
-dataset_save_path: 'datasets/'
-# dataloader
-save_dataloaders: False
-dataloaders_save_path: 'dataloader/'
-log_wandb: False
-wandb_project: 'recbole'
-
-# training settings
+# Training
 epochs: 300
-train_batch_size: 1024
+train_batch_size: 8192
 learner: adam
-
-learning_rate: 0.005
+learning_rate: 0.001
 train_neg_sample_args:
   distribution: uniform
   sample_num: 1
+  dynamic: False
+  candidate_num: 0
 eval_step: 1
 stopping_step: 10
 clip_grad_norm: ~
-weight_decay: 1e-5
 loss_decimal_place: 4
+weight_decay: 1e-5
 require_pow: False
+enable_amp: False
+enable_scaler: False
 
-# evaluation settings
-eval_args: 
-  split: {'RS':[0.8,0.1,0.1]}
+# Evaluation
+eval_args:
   group_by: user
-  order: RO
+  order: TO
+  split: {'LS':'valid_and_test'}
   mode:
     valid: full
     test: full
 repeatable: False
 metrics: ["Recall","NDCG","Hit","Precision","MRR"]
-topk: [20]
-valid_metric: NDCG@20
-valid_metric_bigger: True
-eval_batch_size: 2048
+topk: 20
+valid_metric: NDCG@20 # for early stopping
+eval_batch_size: 4096
 metric_decimal_place: 4

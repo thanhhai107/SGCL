@@ -64,6 +64,3 @@ def save_embeddings(user_embeddings, item_embeddings, output_dir="embeddings"):
 def main():
     user_embeddings, item_embeddings = extract_embeddings()
     save_embeddings(user_embeddings, item_embeddings)
-
-if __name__ == "__main__":
-    main()
