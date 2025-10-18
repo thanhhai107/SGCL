@@ -8,13 +8,13 @@ data_path: 'dataset/'
 checkpoint_dir: 'saved'
 
 # k-core for datasets
-user_inter_num_interval: "[1,inf)"
-item_inter_num_interval: "[1,inf)"
+user_inter_num_interval: "[5,inf)"
+item_inter_num_interval: "[5,inf)"
 
 show_progress: True
 # dataset
 save_dataset: False
-dataset_save_path: null
+dataset_save_path: 'datasets/'
 # dataloader
 save_dataloaders: False
 dataloaders_save_path: 'dataloader/'
@@ -23,10 +23,10 @@ wandb_project: 'recbole'
 
 # training settings
 epochs: 300
-train_batch_size: 4096
+train_batch_size: 8192
 learner: adam
 
-learning_rate: 0.001
+learning_rate: 0.005
 train_neg_sample_args:
   distribution: uniform
   sample_num: 1
