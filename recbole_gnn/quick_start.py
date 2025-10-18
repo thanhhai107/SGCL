@@ -53,20 +53,6 @@ def run_recbole_gnn(model=None, dataset=None, gpu=None, suffix=None, lr=None, we
     logger.info(set_color('best valid ', 'yellow') + f': {best_valid_result}')
     logger.info(set_color('test result', 'yellow') + f': {test_result}')
 
-    # Extract embeddings after training completion
-    try:
-        logger.info(set_color('Starting embedding extraction...', 'blue'))
-        from extract import extract_embeddings, save_embeddings
-        
-        user_embeddings, item_embeddings = extract_embeddings()
-        if user_embeddings is not None and item_embeddings is not None:
-            save_embeddings(user_embeddings, item_embeddings)
-            logger.info(set_color('Embeddings saved successfully to embeddings/ folder', 'green'))
-        else:
-            logger.warning(set_color('Failed to extract embeddings', 'red'))
-    except Exception as e:
-        logger.error(set_color(f'Error during embedding extraction: {e}', 'red'))
-
     return {
         'best_valid_score': best_valid_score,
         'valid_score_bigger': config['valid_metric_bigger'],

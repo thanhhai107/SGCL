@@ -71,14 +71,7 @@ if __name__ == '__main__':
     args, _ = parser.parse_known_args()
 
     config_file_list = args.config_files.strip().split(' ') if args.config_files else None
-    
-    if args.extract_only:
-        # Only extract embeddings from existing saved model
-        try:
-            import recbole_gnn.extract as extract
-            extract.main()
-        except Exception as e:
-            print(f"Error during embedding extraction: {e}")
-    else:
-        # Normal training with automatic embedding extraction
+    if not args.extract_only:
         run_recbole_gnn(model=args.model, dataset=args.dataset, gpu=args.gpu, suffix=args.suffix, lr=args.lr, weight_decay=args.weight_decay, tem=args.tem, config_file_list=config_file_list, saved=True)
+    from recbole_gnn import extract
+    extract.main()
